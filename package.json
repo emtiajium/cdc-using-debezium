@@ -1,0 +1,113 @@
+{
+    "name": "cdc-using-debezium",
+    "version": "0.0.1",
+    "author": {
+        "name": "Emtiaj Hasan",
+        "email": "271emtiaj@gmail.com",
+        "url": "https://www.linkedin.com/in/emtiajium/"
+    },
+    "license": "UNLICENSED",
+    "engines": {
+        "node": "18.13.0"
+    },
+    "scripts": {
+        "create:env": "node -r fs -e \"fs.copyFileSync('.env.sample', '.env', fs.constants.COPYFILE_EXCL)\"",
+        "prebuild": "rimraf dist",
+        "build": "nest build",
+        "format": "prettier --write \"migrations/*.ts\" \"src/**/*.ts\" \"test/**/*.ts\" \"*.md\" \"*.json\"",
+        "format:check": "prettier --check \"migrations/*.ts\" \"src/**/*.ts\" \"test/**/*.ts\" \"*.md\" \"*.json\"",
+        "start:dev": "nest start --watch",
+        "lint": "eslint \"{migrations,src,test}/**/*.ts\" --fix",
+        "lint:check": "eslint \"{migrations,src,test}/**/*.ts\"",
+        "test": "jest --detectOpenHandles --forceExit",
+        "test:memory-usage": "node --expose-gc ./node_modules/.bin/jest --logHeapUsage --runInBand --coverage=false --detectOpenHandles --forceExit --detectLeaks",
+        "typeorm": "node -r ts-node/register -r tsconfig-paths/register ./node_modules/.bin/typeorm",
+        "migration:generate": "npm run typeorm migration:generate -- --pretty --dataSource src/common/persistence/DataSource.ts",
+        "migration:run": "npm run typeorm migration:run -- --dataSource src/common/persistence/DataSource.ts",
+        "migration:revert": "npm run typeorm migration:revert -- --dataSource src/common/persistence/DataSource.ts",
+        "ci": "npm run format:check && npm run lint:check && npm run test && npm run build",
+        "clean:docker-containers": "docker kill cdc-using-debezium-postgres && docker stop cdc-using-debezium-postgres && docker rm cdc-using-debezium-postgres && docker volume rm cdc-using-debezium-postgres-data"
+    },
+    "dependencies": {
+        "@nestjs/common": "^10.0.0",
+        "@nestjs/config": "^3.0.0",
+        "@nestjs/core": "^10.0.0",
+        "@nestjs/platform-express": "^10.0.0",
+        "@nestjs/typeorm": "^10.0.0",
+        "dotenv": "^16.3.1",
+        "pg": "^8.11.1",
+        "reflect-metadata": "^0.1.13",
+        "rimraf": "^5.0.1",
+        "rxjs": "^7.8.1",
+        "typeorm": "^0.3.17",
+        "uuid": "^9.0.0"
+    },
+    "devDependencies": {
+        "@nestjs/cli": "^10.0.0",
+        "@nestjs/schematics": "^10.0.0",
+        "@nestjs/testing": "^10.0.0",
+        "@types/express": "^4.17.17",
+        "@types/jest": "^29.5.2",
+        "@types/node": "^20.3.1",
+        "@types/supertest": "^2.0.12",
+        "@types/uuid": "^9.0.2",
+        "@typescript-eslint/eslint-plugin": "^5.59.11",
+        "@typescript-eslint/parser": "^5.59.11",
+        "eslint": "^8.42.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-import": "^2.28.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "jest": "^29.5.0",
+        "jest-junit": "^16.0.0",
+        "prettier": "^2.8.8",
+        "source-map-support": "^0.5.21",
+        "supertest": "^6.3.3",
+        "ts-jest": "^29.1.0",
+        "ts-loader": "^9.4.3",
+        "ts-node": "^10.9.1",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.1.3"
+    },
+    "jest": {
+        "collectCoverage": true,
+        "coverageDirectory": "./coverage",
+        "collectCoverageFrom": [
+            "src/**/*.ts",
+            "!src/main.ts",
+            "!test/**/*"
+        ],
+        "maxWorkers": 1,
+        "moduleFileExtensions": [
+            "js",
+            "json",
+            "ts"
+        ],
+        "moduleNameMapper": {
+            "^@/(.*)": "<rootDir>/src/$1",
+            "^@test/(.*)": "<rootDir>/test/$1",
+            "^@root/(.*)": "<rootDir>/$1"
+        },
+        "reporters": [
+            "default",
+            [
+                "jest-junit",
+                {
+                    "outputDirectory": "./coverage"
+                }
+            ]
+        ],
+        "rootDir": ".",
+        "setupFiles": [
+            "<rootDir>/test/jest-init.ts"
+        ],
+        "testEnvironment": "node",
+        "testMatch": [
+            "<rootDir>/test/{e2e,integration,unit}/**/*.ts"
+        ],
+        "testTimeout": 5000,
+        "transform": {
+            "^.+\\.(t|j)s$": "ts-jest"
+        },
+        "verbose": true
+    }
+}

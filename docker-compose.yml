@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+    cdc-using-debezium-database:
+        image: postgres:11
+        container_name: cdc-using-debezium-postgres
+        restart: always
+        ports:
+            - '5443:5432'
+        deploy:
+            resources:
+                limits:
+                    memory: 128M
+                reservations:
+                    memory: 128M
+        environment:
+            POSTGRES_PASSWORD: 123
+            POSTGRES_USER: postgres
+            POSTGRES_DB: cdc-using-debezium
+        volumes:
+            - 'cdc-using-debezium-postgres-data:/var/lib/postgresql/data'
+
+volumes:
+    cdc-using-debezium-postgres-data:
+        name: cdc-using-debezium-postgres-data
+        driver: local
