@@ -3,36 +3,62 @@ services:
     cdc-using-debezium-database:
         image: postgres:11
         container_name: cdc-using-debezium-postgres
-        restart: always
+        hostname: cdc-using-debezium-postgres
         ports:
             - '5443:5432'
-        deploy:
-            resources:
-                limits:
-                    memory: 128M
-                reservations:
-                    memory: 128M
         environment:
             POSTGRES_PASSWORD: 123
             POSTGRES_USER: postgres
             POSTGRES_DB: cdc-using-debezium
         volumes:
             - 'cdc-using-debezium-postgres-data:/var/lib/postgresql/data'
+        networks:
+            - kafka-network
 
     cdc-using-debezium-zookeeper:
         image: quay.io/debezium/zookeeper:2.3
         container_name: cdc-using-debezium-zookeeper
-        restart: always
+        hostname: cdc-using-debezium-zookeeper
         ports:
             - '2181:2181'
             - '2888:2888'
             - '3888:3888'
-        deploy:
-            resources:
-                limits:
-                    memory: 128M
-                reservations:
-                    memory: 128M
+        networks:
+            - kafka-network
+
+    cdc-using-debezium-kafka:
+        image: quay.io/debezium/kafka:2.3
+        container_name: cdc-using-debezium-kafka
+        hostname: cdc-using-debezium-kafka
+        ports:
+            - '9092:9092'
+        environment:
+            KAFKA_ZOOKEEPER_CONNECT: cdc-using-debezium-zookeeper:2181
+        links:
+            - cdc-using-debezium-zookeeper
+        networks:
+            - kafka-network
+
+    cdc-using-debezium-connect:
+        image: quay.io/debezium/connect:2.3
+        container_name: cdc-using-debezium-connect
+        hostname: cdc-using-debezium-postgres
+        ports:
+            - '8083:8083'
+        environment:
+            GROUP_ID: 1
+            CONFIG_STORAGE_TOPIC: my_connect_configs
+            OFFSET_STORAGE_TOPIC: my_connect_offsets
+            STATUS_STORAGE_TOPIC: my_connect_statuses
+        links:
+            - cdc-using-debezium-kafka
+            - cdc-using-debezium-database
+        networks:
+            - kafka-network
+
+networks:
+    kafka-network:
+        name: kafka-network
 
 volumes:
     cdc-using-debezium-postgres-data:
