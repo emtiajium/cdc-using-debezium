@@ -19,6 +19,21 @@ services:
         volumes:
             - 'cdc-using-debezium-postgres-data:/var/lib/postgresql/data'
 
+    cdc-using-debezium-zookeeper:
+        image: quay.io/debezium/zookeeper:2.3
+        container_name: cdc-using-debezium-zookeeper
+        restart: always
+        ports:
+            - '2181:2181'
+            - '2888:2888'
+            - '3888:3888'
+        deploy:
+            resources:
+                limits:
+                    memory: 128M
+                reservations:
+                    memory: 128M
+
 volumes:
     cdc-using-debezium-postgres-data:
         name: cdc-using-debezium-postgres-data
