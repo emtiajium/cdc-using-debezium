@@ -11,6 +11,7 @@ services:
             POSTGRES_PASSWORD: 123
             POSTGRES_USER: postgres
             POSTGRES_DB: cdc-using-debezium
+        command: ['postgres', '-c', 'wal_level=logical']
         volumes:
             - 'cdc-using-debezium-postgres-data:/var/lib/postgresql/data'
         networks:
