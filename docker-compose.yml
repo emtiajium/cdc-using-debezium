@@ -32,6 +32,7 @@ services:
 #            - cdc-using-debezium-network
 
     cdc-using-debezium-kafka:
+#        verify that Kafka started: docker-compose logs -f cdc-using-debezium-kafka | grep -i started
 #        image: quay.io/debezium/kafka:2.3
         image: bitnami/kafka:3.4
         container_name: cdc-using-debezium-kafka
@@ -57,7 +58,7 @@ services:
             - cdc-using-debezium-network
 
     cdc-using-debezium-connect:
-        image: quay.io/debezium/connect:2.3
+        image: debezium/connect:2.3
         container_name: cdc-using-debezium-connect
         hostname: cdc-using-debezium-connect
         restart: always
@@ -68,12 +69,24 @@ services:
             CONFIG_STORAGE_TOPIC: my_connect_configs
             OFFSET_STORAGE_TOPIC: my_connect_offsets
             STATUS_STORAGE_TOPIC: my_connect_statuses
-            REST_HOST_NAME: 0.0.0.0
+            BOOTSTRAP_SERVERS: cdc-using-debezium-kafka:9092
         links:
             - cdc-using-debezium-kafka
             - cdc-using-debezium-postgres
         networks:
             - cdc-using-debezium-network
+
+
+#    debezium-ui:
+#        image: quay.io/debezium/debezium-ui:2.4
+#        container_name: debezium-ui
+#        hostname: debezium-ui
+#        ports:
+#            - '8099:8080'
+#        environment:
+#            KAFKA_CONNECT_URIS: http://connect:8083
+#        networks:
+#            - cdc-using-debezium-network
 
 networks:
     cdc-using-debezium-network:
