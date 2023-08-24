@@ -1,9 +1,10 @@
 version: '3.7'
 services:
-    cdc-using-debezium-database:
+    cdc-using-debezium-postgres:
         image: postgres:11
         container_name: cdc-using-debezium-postgres
         hostname: cdc-using-debezium-postgres
+        restart: always
         ports:
             - '5443:5432'
         environment:
@@ -13,36 +14,53 @@ services:
         volumes:
             - 'cdc-using-debezium-postgres-data:/var/lib/postgresql/data'
         networks:
-            - kafka-network
+            - cdc-using-debezium-network
 
-    cdc-using-debezium-zookeeper:
-        image: quay.io/debezium/zookeeper:2.3
-        container_name: cdc-using-debezium-zookeeper
-        hostname: cdc-using-debezium-zookeeper
-        ports:
-            - '2181:2181'
-            - '2888:2888'
-            - '3888:3888'
-        networks:
-            - kafka-network
+#    cdc-using-debezium-zookeeper:
+#        # image: quay.io/debezium/zookeeper:2.3
+#        image: zookeeper:3.8
+#        container_name: cdc-using-debezium-zookeeper
+#        hostname: cdc-using-debezium-zookeeper
+#        restart: always
+#        ports:
+#            - '2181:2181'
+#            - '2888:2888'
+#            - '3888:3888'
+#        environment:
+#            ALLOW_ANONYMOUS_LOGIN: 'true'
+#        networks:
+#            - cdc-using-debezium-network
 
     cdc-using-debezium-kafka:
-        image: quay.io/debezium/kafka:2.3
+#        image: quay.io/debezium/kafka:2.3
+        image: bitnami/kafka:3.4
         container_name: cdc-using-debezium-kafka
         hostname: cdc-using-debezium-kafka
+        restart: always
         ports:
             - '9092:9092'
         environment:
-            KAFKA_ZOOKEEPER_CONNECT: cdc-using-debezium-zookeeper:2181
-        links:
-            - cdc-using-debezium-zookeeper
+#            KAFKA_CFG_ZOOKEEPER_CONNECT: cdc-using-debezium-zookeeper:2181
+#            KAFKA_CFG_ZOOKEEPER_METADATA_MIGRATION_ENABLE: 'true'
+            KAFKA_CFG_NODE_ID: 1
+            KAFKA_KRAFT_CLUSTER_ID: q0k00yjQRaqWmAAAZv955w # base64 UUID
+            KAFKA_CFG_PROCESS_ROLES: controller,broker
+            KAFKA_CFG_LISTENERS: INSIDE://:9092,OUTSIDE://:9093
+            KAFKA_CFG_ADVERTISED_LISTENERS: INSIDE://:9092
+            KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+            KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@cdc-using-debezium-kafka:9093
+            KAFKA_CFG_INTER_BROKER_LISTENER_NAME: INSIDE
+            KAFKA_CFG_CONTROLLER_LISTENER_NAMES: OUTSIDE
+#        links:
+#            - cdc-using-debezium-zookeeper
         networks:
-            - kafka-network
+            - cdc-using-debezium-network
 
     cdc-using-debezium-connect:
         image: quay.io/debezium/connect:2.3
         container_name: cdc-using-debezium-connect
-        hostname: cdc-using-debezium-postgres
+        hostname: cdc-using-debezium-connect
+        restart: always
         ports:
             - '8083:8083'
         environment:
@@ -50,15 +68,17 @@ services:
             CONFIG_STORAGE_TOPIC: my_connect_configs
             OFFSET_STORAGE_TOPIC: my_connect_offsets
             STATUS_STORAGE_TOPIC: my_connect_statuses
+            REST_HOST_NAME: 0.0.0.0
         links:
             - cdc-using-debezium-kafka
-            - cdc-using-debezium-database
+            - cdc-using-debezium-postgres
         networks:
-            - kafka-network
+            - cdc-using-debezium-network
 
 networks:
-    kafka-network:
-        name: kafka-network
+    cdc-using-debezium-network:
+        name: cdc-using-debezium-network
+        driver: bridge
 
 volumes:
     cdc-using-debezium-postgres-data:
