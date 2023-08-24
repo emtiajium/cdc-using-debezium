@@ -76,17 +76,17 @@ services:
         networks:
             - cdc-using-debezium-network
 
-
-#    debezium-ui:
-#        image: quay.io/debezium/debezium-ui:2.4
-#        container_name: debezium-ui
-#        hostname: debezium-ui
-#        ports:
-#            - '8099:8080'
-#        environment:
-#            KAFKA_CONNECT_URIS: http://connect:8083
-#        networks:
-#            - cdc-using-debezium-network
+    debezium-ui:
+        image: debezium/debezium-ui:2.4
+        container_name: debezium-ui
+        hostname: debezium-ui
+        restart: always
+        ports:
+            - '8099:8080'
+        environment:
+            KAFKA_CONNECT_URIS: http://connect:8083
+        networks:
+            - cdc-using-debezium-network
 
 networks:
     cdc-using-debezium-network:
