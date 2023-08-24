@@ -26,7 +26,7 @@
         "migration:run": "npm run typeorm migration:run -- --dataSource src/common/persistence/DataSource.ts",
         "migration:revert": "npm run typeorm migration:revert -- --dataSource src/common/persistence/DataSource.ts",
         "ci": "npm run format:check && npm run lint:check && npm run test && npm run build",
-        "clean:docker-containers": "docker kill cdc-using-debezium-postgres && docker stop cdc-using-debezium-postgres && docker rm cdc-using-debezium-postgres && docker volume rm cdc-using-debezium-postgres-data"
+        "clean:docker-containers": "docker-compose stop && docker-compose rm -f && docker-compose down --volumes"
     },
     "dependencies": {
         "@nestjs/common": "^10.0.0",
