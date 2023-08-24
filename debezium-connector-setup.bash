@@ -20,4 +20,4 @@ curl --location 'http://localhost:8083/connectors' \
 }
 '
 
-curl -S -X GET -H "Accept:application/json" http://localhost:8083/connectors/cdc-using-debezium-connector | jq '.'
+curl -S -X GET -H "Accept: application/json" http://localhost:8083/connectors/cdc-using-debezium-connector | jq '.'
