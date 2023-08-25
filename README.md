@@ -24,7 +24,7 @@ TO BE ADDED
 
 ➜ `npm run create:env`
 
-###### Run backing services
+###### Run backing services (Postgres, Kafka, Debezium Connect, Debezium UI)
 
 ➜ `source setup-env.bash`
 
@@ -38,7 +38,7 @@ TO BE ADDED
 
 ➜ `bash debezium-connector-setup.bash`
 
-###### Start the Debezium UI
+###### Start the Debezium UI (Optional)
 
 ➜ <http://localhost:8099>
 
