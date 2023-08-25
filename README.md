@@ -12,6 +12,8 @@ TO BE ADDED
 
 ➜ Install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
 
+➜ Install [jq](https://jqlang.github.io/jq/download/) to prettify the JSON
+
 ###### Clone the repo and install all dependencies
 
 ➜ `git clone git@github.com:emtiajium/cdc-using-debezium.git`
@@ -46,7 +48,7 @@ TO BE ADDED
 
 ➜ Insert/Update/Delete data (e.g., insert a user: `sql-snippets/insert-users.sql`)
 
-➜ `docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic cdc-using-debezium-topic.public.User --from-beginning`
+➜ `docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic cdc-using-debezium-topic.public.User --from-beginning | jq '.'`
 
 ## Remove backing services
 
