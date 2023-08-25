@@ -85,7 +85,7 @@ services:
         ports:
             - '8099:8080'
         environment:
-            KAFKA_CONNECT_URIS: http://192.168.1.110:8083
+            KAFKA_CONNECT_URIS: http://${DEVICE_IP}:8083
         links:
             - cdc-using-debezium-connect
         networks:

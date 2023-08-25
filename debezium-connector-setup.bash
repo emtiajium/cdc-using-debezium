@@ -1,6 +1,4 @@
-source .env
-
-ip=$(hostname -I | cut -d " " -f 1);
+source setup-env.bash
 
 curl --location 'http://localhost:8083/connectors' \
     --header 'Accept: application/json' \
@@ -10,7 +8,7 @@ curl --location 'http://localhost:8083/connectors' \
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
         "tasks.max": "1",
-        "database.hostname": "'$ip'",
+        "database.hostname": "'$DEVICE_IP'",
         "database.port": "'$TYPEORM_PORT'",
         "database.user": "'$TYPEORM_USERNAME'",
         "database.password": "'$TYPEORM_PASSWORD'",

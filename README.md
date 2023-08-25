@@ -26,7 +26,7 @@ TO BE ADDED
 
 ###### Run backing services
 
-➜ `source .env`
+➜ `source setup-env.bash`
 
 ➜ `docker-compose up -d`
 
