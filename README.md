@@ -20,13 +20,15 @@ TO BE ADDED
 
 ➜ `npm install`
 
-###### Run backing services
-
-➜ `docker-compose up -d`
-
 ###### Create the configuration
 
 ➜ `npm run create:env`
+
+###### Run backing services
+
+➜ `source .env`
+
+➜ `docker-compose up -d`
 
 ###### Synchronize model changes into the database
 

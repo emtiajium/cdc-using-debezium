@@ -6,11 +6,11 @@ services:
         hostname: cdc-using-debezium-postgres
         restart: always
         ports:
-            - '5443:5432'
+            - ${TYPEORM_PORT}:5432
         environment:
-            POSTGRES_PASSWORD: 123
-            POSTGRES_USER: postgres
-            POSTGRES_DB: cdc-using-debezium
+            POSTGRES_PASSWORD: ${TYPEORM_PASSWORD}
+            POSTGRES_USER: ${TYPEORM_USERNAME}
+            POSTGRES_DB: ${TYPEORM_DATABASE}
         volumes:
             - 'cdc-using-debezium-postgres-data:/var/lib/postgresql/data'
         networks:
