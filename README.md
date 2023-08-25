@@ -52,6 +52,13 @@ TO BE ADDED
 
 ➜ `npm run clean:docker-containers`
 
+## Reading materials
+
+-   [Debezium official tutorial](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/)
+-   [Kafka](https://kafka.apache.org/)
+-   [Kafka connection](https://debezium.io/documentation/reference/2.3/tutorial.html)
+    > I haven't used Zookeeper
+
 ## Change Logs
 
 -   `0.0.1`: --- ---
