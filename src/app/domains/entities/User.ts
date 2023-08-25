@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import Vocabulary from '@/app/domains/entities/Vocabulary';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('User')
 export class User {
@@ -11,7 +10,4 @@ export class User {
 
     @Column({ type: 'varchar', nullable: true })
     name: string;
-
-    @OneToMany(() => Vocabulary, (vocabulary) => vocabulary.user, { eager: false, cascade: false })
-    vocabularies: Vocabulary[];
 }

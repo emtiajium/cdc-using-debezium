@@ -4,8 +4,6 @@ import { DatabaseConfig } from '@/common/persistence/DatabaseConfig';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseNamingStrategy } from '@/common/persistence/DatabaseNamingStrategy';
 import { User } from '@/app/domains/entities/User';
-import Definition from '@/app/domains/entities/Definition';
-import Vocabulary from '@/app/domains/entities/Vocabulary';
 
 @Module({
     imports: [
@@ -22,7 +20,7 @@ import Vocabulary from '@/app/domains/entities/Vocabulary';
                     username: databaseConfig.username,
                     password: databaseConfig.password,
                     database: databaseConfig.database,
-                    entities: [User, Definition, Vocabulary],
+                    entities: [User],
                     synchronize: false,
                     logging: databaseConfig.logging,
                     namingStrategy: new DatabaseNamingStrategy(),
