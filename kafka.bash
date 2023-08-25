@@ -7,4 +7,6 @@ docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-topics.sh --bo
 
 docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-topics.sh --bootstrap-server $server --describe $topic
 
-docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server $server --topic $topic --from-beginning
+docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server $server --topic $topic --from-beginning | jq '.'
+
+docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-metadata-quorum.sh --bootstrap-server $server describe --status
