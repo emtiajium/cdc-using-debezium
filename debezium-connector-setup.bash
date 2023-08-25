@@ -13,8 +13,8 @@ curl --location 'http://localhost:8083/connectors' \
         "database.password": "'$TYPEORM_PASSWORD'",
         "database.dbname": "'$TYPEORM_DATABASE'",
         "database.server.id": "184054",
-        "topic.prefix": "cdc-using-debezium-topic",
-        "table.include.list": "public.User,public.Vocabulary,public.Definition"
+        "table.include.list": "public.User,public.Vocabulary,public.Definition",
+        "topic.prefix": "cdc-using-debezium-topic"
     }
 }'
 
