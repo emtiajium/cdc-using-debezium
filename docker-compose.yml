@@ -35,12 +35,13 @@ services:
             KAFKA_CFG_NODE_ID: 1
             KAFKA_KRAFT_CLUSTER_ID: q0k00yjQRaqWmAAAZv955w # base64 UUID
             KAFKA_CFG_PROCESS_ROLES: controller,broker
-            KAFKA_CFG_LISTENERS: INSIDE://:9092,OUTSIDE://:9093
-            KAFKA_CFG_ADVERTISED_LISTENERS: INSIDE://:9092
-            KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
-            KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@cdc-using-debezium-kafka:9093
-            KAFKA_CFG_INTER_BROKER_LISTENER_NAME: INSIDE
-            KAFKA_CFG_CONTROLLER_LISTENER_NAMES: OUTSIDE
+            # https://levelup.gitconnected.com/kraft-kafka-cluster-with-docker-e79a97d19f2c
+            KAFKA_CFG_LISTENERS: INTERNAL://cdc-using-debezium-kafka:29092,CONTROLLER://cdc-using-debezium-kafka:29093,EXTERNAL://:9092
+            KAFKA_CFG_ADVERTISED_LISTENERS: INTERNAL://cdc-using-debezium-kafka:29092,EXTERNAL://localhost:9092
+            KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+            KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@cdc-using-debezium-kafka:29093
+            KAFKA_CFG_INTER_BROKER_LISTENER_NAME: INTERNAL
+            KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
         networks:
             - cdc-using-debezium-network
 
@@ -52,7 +53,7 @@ services:
         ports:
             - '8083:8083'
         environment:
-            BOOTSTRAP_SERVERS: cdc-using-debezium-kafka:9092
+            BOOTSTRAP_SERVERS: cdc-using-debezium-kafka:29092
             GROUP_ID: 1
             CONFIG_STORAGE_TOPIC: my_connect_configs
             OFFSET_STORAGE_TOPIC: my_connect_offsets
