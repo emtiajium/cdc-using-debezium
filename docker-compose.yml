@@ -16,24 +16,7 @@ services:
         networks:
             - cdc-using-debezium-network
 
-#    cdc-using-debezium-zookeeper:
-#        # image: quay.io/debezium/zookeeper:2.3
-#        image: zookeeper:3.8
-#        container_name: cdc-using-debezium-zookeeper
-#        hostname: cdc-using-debezium-zookeeper
-#        restart: always
-#        ports:
-#            - '2181:2181'
-#            - '2888:2888'
-#            - '3888:3888'
-#        environment:
-#            ALLOW_ANONYMOUS_LOGIN: 'true'
-#        networks:
-#            - cdc-using-debezium-network
-
     cdc-using-debezium-kafka:
-#        verify that Kafka started: docker-compose logs -f cdc-using-debezium-kafka | grep -i started
-#        image: quay.io/debezium/kafka:2.3
         image: bitnami/kafka:3.4
         container_name: cdc-using-debezium-kafka
         hostname: cdc-using-debezium-kafka
@@ -41,8 +24,6 @@ services:
         ports:
             - '9092:9092'
         environment:
-#            KAFKA_CFG_ZOOKEEPER_CONNECT: cdc-using-debezium-zookeeper:2181
-#            KAFKA_CFG_ZOOKEEPER_METADATA_MIGRATION_ENABLE: 'true'
             KAFKA_CFG_NODE_ID: 1
             KAFKA_KRAFT_CLUSTER_ID: q0k00yjQRaqWmAAAZv955w # base64 UUID
             KAFKA_CFG_PROCESS_ROLES: controller,broker
@@ -52,8 +33,6 @@ services:
             KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 1@cdc-using-debezium-kafka:9093
             KAFKA_CFG_INTER_BROKER_LISTENER_NAME: INSIDE
             KAFKA_CFG_CONTROLLER_LISTENER_NAMES: OUTSIDE
-#        links:
-#            - cdc-using-debezium-zookeeper
         networks:
             - cdc-using-debezium-network
 
