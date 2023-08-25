@@ -57,7 +57,7 @@ TO BE ADDED
 ## Reading materials
 
 -   [Debezium official tutorial](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/)
-    > I haven't used Zookeeper
+    > I haven't used ZooKeeper as KRaft is [production-ready and Kafka 4.0 will remove ZooKeeper entirely](https://cwiki.apache.org/confluence/display/KAFKA/KIP-833%3A+Mark+KRaft+as+Production+Ready)
 -   [Kafka](https://kafka.apache.org/)
 -   [Kafka client-broker connection](https://debezium.io/documentation/reference/2.3/tutorial.html)
 
