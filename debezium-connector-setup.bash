@@ -7,7 +7,6 @@ curl --location 'http://localhost:8083/connectors' \
     "name": "cdc-using-debezium-connector",
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-        "tasks.max": "1",
         "database.hostname": "'$DEVICE_IP'",
         "database.port": "'$TYPEORM_PORT'",
         "database.user": "'$TYPEORM_USERNAME'",
