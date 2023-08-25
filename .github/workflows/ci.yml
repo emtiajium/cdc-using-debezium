@@ -39,7 +39,7 @@ jobs:
         run: npm run create:env
 
       - name: Run Docker containers
-        run: source .env && docker-compose up -d
+        run: source setup-env.bash && docker-compose up -d
 
       - name: Database Tables' modification
         run: npm run migration:run
