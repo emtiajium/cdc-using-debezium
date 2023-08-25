@@ -1,5 +1,7 @@
 source .env
 
+ip=$(hostname -I | cut -d " " -f 1);
+
 curl --location 'http://localhost:8083/connectors' \
     --header 'Accept: application/json' \
     --header 'Content-Type: application/json' \
@@ -8,7 +10,7 @@ curl --location 'http://localhost:8083/connectors' \
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
         "tasks.max": "1",
-        "database.hostname": "192.168.1.110",
+        "database.hostname": "'$ip'",
         "database.port": "'$TYPEORM_PORT'",
         "database.user": "'$TYPEORM_USERNAME'",
         "database.password": "'$TYPEORM_PASSWORD'",
