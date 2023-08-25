@@ -26,7 +26,9 @@
         "migration:run": "npm run typeorm migration:run -- --dataSource src/common/persistence/DataSource.ts",
         "migration:revert": "npm run typeorm migration:revert -- --dataSource src/common/persistence/DataSource.ts",
         "ci": "npm run format:check && npm run lint:check && npm run test && npm run build",
-        "clean:docker-containers": "docker-compose stop && docker-compose rm -f && docker-compose down --volumes"
+        "clean:docker-containers": "docker-compose stop && docker-compose rm -f && docker-compose down --volumes",
+        "insert-users": "docker exec cdc-using-debezium-postgres psql --username=postgres --dbname=cdc-using-debezium --file=docker-entrypoint-initdb.d/insert-users.sql",
+        "reset": "npm run clean:docker-containers && source setup-env.bash && docker-compose up -d && npm run migration:run && bash debezium-connector-setup.bash && npm run insert-users"
     },
     "dependencies": {
         "@nestjs/common": "^10.0.0",
