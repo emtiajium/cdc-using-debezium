@@ -14,10 +14,8 @@ curl --location 'http://localhost:8083/connectors' \
         "database.password": "'$TYPEORM_PASSWORD'",
         "database.dbname": "'$TYPEORM_DATABASE'",
         "database.server.id": "184054",
-        "topic.prefix": "cdc-using-debezium",
-        "database.include.list": "public.'$TYPEORM_DATABASE'",
-        "schema.history.internal.kafka.bootstrap.servers": "cdc-using-debezium-kafka:9092",
-        "schema.history.internal.kafka.topic": "schema-changes.cdc-using-debezium"
+        "topic.prefix": "cdc-using-debezium-topic",
+        "table.include.list": "public.User,public.Vocabulary,public.Definition"
     }
 }'
 
