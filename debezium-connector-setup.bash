@@ -1,7 +1,7 @@
 curl --location 'http://localhost:8083/connectors' \
---header 'Accept: application/json' \
---header 'Content-Type: application/json' \
---data '{
+    --header 'Accept: application/json' \
+    --header 'Content-Type: application/json' \
+    --data '{
     "name": "cdc-using-debezium-connector",
     "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
@@ -20,4 +20,4 @@ curl --location 'http://localhost:8083/connectors' \
 }
 '
 
-curl -S -X GET -H "Accept: application/json" http://localhost:8083/connectors/cdc-using-debezium-connector | jq '.'
+curl --location 'http://localhost:8083/connectors/cdc-using-debezium-connector' | jq '.'
