@@ -59,7 +59,7 @@ TO BE ADDED
 -   [Debezium official tutorial](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/)
     > I haven't used Zookeeper
 -   [Kafka](https://kafka.apache.org/)
--   [Kafka connection](https://debezium.io/documentation/reference/2.3/tutorial.html)
+-   [Kafka client-broker connection](https://debezium.io/documentation/reference/2.3/tutorial.html)
 
 ## Change Logs
 
