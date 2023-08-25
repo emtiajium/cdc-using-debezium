@@ -42,6 +42,12 @@ TO BE ADDED
 
 ➜ <http://localhost:8099>
 
+###### View change events
+
+➜ Insert/Update/Delete data (e.g., insert a user: `sql-snippets/insert-users.sql`)
+
+➜ `docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic cdc-using-debezium-topic.public.User --from-beginning`
+
 ## Remove backing services
 
 ➜ `npm run clean:docker-containers`
