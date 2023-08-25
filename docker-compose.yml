@@ -1,4 +1,11 @@
 version: '3.7'
+
+networks:
+    cdc-using-debezium-network:
+        name: cdc-using-debezium-network
+        driver: bridge
+        external: false
+
 services:
     cdc-using-debezium-postgres:
         image: debezium/postgres:11
@@ -70,12 +77,6 @@ services:
             - cdc-using-debezium-connect
         networks:
             - cdc-using-debezium-network
-
-networks:
-    cdc-using-debezium-network:
-        name: cdc-using-debezium-network
-        driver: bridge
-        external: false
 
 volumes:
     cdc-using-debezium-postgres-data:
