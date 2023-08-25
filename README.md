@@ -32,21 +32,13 @@ TO BE ADDED
 
 ➜ `npm run migration:run`
 
-###### Insert data
+###### Register the PostgreSQL connector to monitor the database
 
-➜ `bash scripts/db-restore.bash`
+➜ `bash debezium-connector-setup.bash`
 
-###### Run tests
+###### Start the Debezium UI
 
-➜ `npm run test`
-
-###### Start the development environment
-
-➜ `npm run start:dev`
-
-## Generate new migration script after changing the entity class(es)
-
-➜ `npm run migration:generate migrations/<file-name>`
+➜ <http://localhost:8099>
 
 ## Remove backing services
 
