@@ -35,11 +35,11 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Run Docker containers
-        run: docker-compose up -d
-
       - name: Create environment variables
         run: npm run create:env
+
+      - name: Run Docker containers
+        run: source .env && docker-compose up -d
 
       - name: Database Tables' modification
         run: npm run migration:run
