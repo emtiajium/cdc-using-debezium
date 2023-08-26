@@ -12,6 +12,8 @@ TO BE ADDED
 
 ➜ Install [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/)
 
+➜ Install [Curl](https://curl.se/download.html) to make API requests
+
 ➜ Install [jq](https://jqlang.github.io/jq/download/) to prettify the JSON
 
 ###### Clone the repo and install all dependencies
