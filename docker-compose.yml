@@ -65,10 +65,10 @@ services:
         networks:
             - cdc-using-debezium-network
 
-    debezium-ui:
+    cdc-using-debezium-ui:
         image: debezium/debezium-ui:2.4
-        container_name: debezium-ui
-        hostname: debezium-ui
+        container_name: cdc-using-debezium-ui
+        hostname: cdc-using-debezium-ui
         restart: always
         ports:
             - '8099:8080'
