@@ -44,6 +44,9 @@ export class KafkaService implements OnApplicationShutdown, OnApplicationBootstr
 
             await consumer.run({
                 eachMessage: async ({ topic, message }) => {
+                    if (!message.value) {
+                        return;
+                    }
                     const parsedMessage = JSON.parse(message.value.toString());
                     const eventPayload = {
                         topic,
