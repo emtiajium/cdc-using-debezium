@@ -52,6 +52,8 @@
 
 ➜ `docker exec cdc-using-debezium-kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic cdc-using-debezium-topic.public.User --from-beginning | jq '.'`
 
+➜ Alternatively, execute `npm run start:dev` and keep an eye on the terminal
+
 ## Remove backing services
 
 ➜ `npm run clean:docker-containers`
